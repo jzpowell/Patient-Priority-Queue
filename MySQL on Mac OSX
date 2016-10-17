@@ -1,0 +1,23 @@
+Getting MySQL running on Mac OSX:
+
+	1)	 Downloand the .dmg file. 
+	⁃	I followed the instructions listed here (http://dev.mysql.com/doc/refman/5.7/en/osx-installation-pkg.html). 
+	⁃	download .dmg file
+	⁃	Run the .pkg file
+	⁃	you will be prompted wioth a temporary password. SAVE THE TEMP PASSWORD! I took a screenshot of the window for future reference. 
+	2)	Open the MySQL Monitor in Terminal
+	⁃	Run the following commands:
+	⁃	alias mysql=/usr/local/mysql/bin/mysql
+	⁃	alias mysqladmin=/usr/local/mysql/bin/mysqladmin
+	⁃	mysql -u root -p
+  
+	⁃	Enter in the temp password that the .pkg file gave you earlier. 
+	⁃	You should be in the MySQL Monitor at this point. 
+	3)	Change the root password.
+	⁃	In order to do anything, you will need to change the root password to something custom.
+	⁃	Run the following command once you are in the MySQL Monitor
+	⁃	ALTER USER 'root’@'localhost' IDENTIFIED BY 'NEW_PASSWORD';
+	⁃	No special characters in the new password. 
+
+
+At this point, you should be able to create and manage databases through the terminal window. For more reference material on MySQL, check out http://dev.mysql.com/doc/
