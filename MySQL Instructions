@@ -21,3 +21,6 @@ Getting MySQL running on Mac OSX:
 
 
 At this point, you should be able to create and manage databases through the terminal window. For more reference material on MySQL, check out http://dev.mysql.com/doc/
+
+
+For Windows, check out the MySQL documentation here: http://dev.mysql.com/doc/refman/5.7/en/windows-installation.html
