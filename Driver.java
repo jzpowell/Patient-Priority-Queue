@@ -1,5 +1,5 @@
 /******************************************************************
-* This is the Driver class. It houses all of the callabe methods our
+* This is the Driver class. It houses all of the callable methods our
 * Priority Queue and GUI will implement. If you come across a method
 * that needs to be added, let me know and I will make sure it gets
 * entered in. 
