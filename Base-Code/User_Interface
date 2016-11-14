@@ -1,33 +1,31 @@
-package Test;
+package Priority_Queue;
 
 import java.awt.CardLayout;
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Driver;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.EtchedBorder;
 import javax.swing.border.LineBorder;
-import java.awt.Color;
-import com.jgoodies.forms.factories.DefaultComponentFactory;
-import com.toedter.calendar.JDateChooser;
-import javax.swing.JComboBox;
 
-public class PatientUI  {
+import com.toedter.calendar.JDateChooser;
+
+public class patientUI  {
+	
+	public static int Pat_ID = methodClass.updateIDNum();
 
 	private JFrame frame;
 	private JTextField textField_1;
@@ -51,7 +49,7 @@ public class PatientUI  {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					PatientUI window = new PatientUI();
+					patientUI window = new patientUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -63,7 +61,7 @@ public class PatientUI  {
 	/**
 	 * Create the application.
 	 */
-	public PatientUI() {
+	public patientUI() {
 		initialize();
 	}
 
@@ -105,6 +103,7 @@ public class PatientUI  {
 			public void actionPerformed(ActionEvent e) {
 		  addPanel.setVisible(true);
 		  homePanel.setVisible(false);
+		  
 			}
 			
 		});
@@ -138,11 +137,12 @@ public class PatientUI  {
 		homePanel.add(lblCurentPatientList);
 		
 		JLabel labelLogo = new JLabel("");
-		Image Img = new ImageIcon(this.getClass().getResource("/Sacred.jpg")).getImage();
+		Image Img = new ImageIcon(this.getClass().getResource("/Sacred_transparent.png")).getImage();
 		labelLogo.setIcon(new ImageIcon(Img));
 		labelLogo.setBounds(31, -16, 840, 162);
 		homePanel.add(labelLogo);
 		
+		//add panel
 		
 		JLabel lblNewLabel_1 = new JLabel("First Name");
 		lblNewLabel_1.setBounds(68, 166, 75, 16);
@@ -164,6 +164,11 @@ public class PatientUI  {
 		lblNewLabel_5.setBounds(517, 245, 160, 16);
 		addPanel.add(lblNewLabel_5);
 		
+		JLabel lblNewLabel = new JLabel("Patient ID: " + Pat_ID);
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(610, 23, 185, 16);
+		addPanel.add(lblNewLabel);
+		
 		textField_1 = new JTextField();
 		textField_1.setBounds(68, 182, 160, 26);
 		addPanel.add(textField_1);
@@ -184,13 +189,27 @@ public class PatientUI  {
 		addPanel.add(textField_5);
 		textField_5.setColumns(10);
 		
+		JDateChooser dateChooser = new JDateChooser();
+		dateChooser.getCalendarButton();
+		dateChooser.setBounds(68, 261, 160, 26);
+		addPanel.add(dateChooser);
+		
+		Integer[] feet = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+		JComboBox comboBoxFeet = new JComboBox(feet);
+		comboBoxFeet.setBounds(300, 262, 73, 27);
+		addPanel.add(comboBoxFeet);
+		
+		Integer[] inches = {00, 01, 02, 03, 04, 05, 06, 07, 8, 9, 10, 11};
+		JComboBox comboBoxInches = new JComboBox(inches);
+		comboBoxInches.setBounds(385, 262, 75, 27);
+		addPanel.add(comboBoxInches);
+		
 		JLabel lblNewLabel_11 = new JLabel("Add Patient");
 		lblNewLabel_11.setFont(new Font("Lucida Grande", Font.PLAIN, 19));
 		lblNewLabel_11.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNewLabel_11.setBounds(266, 49, 199, 67);
 		addPanel.add(lblNewLabel_11);
 		
-		//String [] patPriority= {"None", "Low", "Medium", "High"};
 		
 		JButton btnSubmit = new JButton("Submit");
 		Image Img5 = new ImageIcon(this.getClass().getResource("/check.png")).getImage();
@@ -200,20 +219,20 @@ public class PatientUI  {
 				final String fNameText  =  textField_1.getText();
 				final String mNameText  =  textField_2.getText();
 				final String lNameText  =  textField_3.getText();
-				//final String dobText    =  textField_4.getText();
+				final String dobText    =  dateChooser.getDateFormatString();
 				final String weightText =  textField_5.getText();
-				//final String heightText =  textField_12.getText();
+				final String heightText =  feet.toString() + "\' " + inches.toString() + "\"";
 				final String streetText =  textField_9.getText();
 				final String cityText 	=  textField_10.getText();
 				final String stateText  =  textField_11.getText();
 				
 				boolean success = false;
-				//try {
-					//Driver.addEntry(fNameText, lNameText, mNameText, streetText, cityText, stateText, heightText, weightText, dobText);
-					//success = true;
-				//} catch (Exception e1) {
-				//	e1.printStackTrace();
-				//}
+				try {
+					methodClass.addEntry(fNameText, mNameText, lNameText, streetText, cityText, stateText, heightText, weightText, dobText);;
+					success = true;
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				
 				if(success){
 					JOptionPane.showMessageDialog(frame, "Entry Added!");
@@ -231,7 +250,7 @@ public class PatientUI  {
 				*/
 			}
 		});
-		btnSubmit.setBounds(300, 418, 185, 43);
+		btnSubmit.setBounds(323, 418, 185, 43);
 		addPanel.add(btnSubmit);
 		
 		JButton btnBackToHome = new JButton("Home");
@@ -281,19 +300,6 @@ public class PatientUI  {
 		lblMiddleName.setBounds(300, 166, 84, 16);
 		addPanel.add(lblMiddleName);
 		
-		JDateChooser dateChooser = new JDateChooser();
-		dateChooser.setBounds(68, 261, 160, 26);
-		addPanel.add(dateChooser);
-		
-		Integer[] feet = {4, 5, 6, 7, 8};
-		JComboBox comboBoxFeet = new JComboBox(feet);
-		comboBoxFeet.setBounds(300, 262, 73, 27);
-		addPanel.add(comboBoxFeet);
-		
-		Integer[] inches = {01, 02, 03, 04, 05, 06, 07, 8, 9, 10, 11};
-		JComboBox comboBoxInches = new JComboBox(inches);
-		comboBoxInches.setBounds(385, 262, 75, 27);
-		addPanel.add(comboBoxInches);
 		
 		JLabel lblNewLabel_7 = new JLabel("Patient Search");
 		lblNewLabel_7.setBounds(350, 6, 96, 16);
@@ -340,29 +346,38 @@ public class PatientUI  {
 		searchPanel.add(textField);
 		textField.setColumns(10);
 		
-		JButton btnSubmit_1 = new JButton("Submit");
-		Image Img4 = new ImageIcon(this.getClass().getResource("/check.png")).getImage();
-		btnSubmit_1.setIcon(new ImageIcon(Img4));
-			btnSubmit_1.addActionListener(new ActionListener(){
-				public void actionPerformed(ActionEvent e) {
-					
-					
-				}
-				
-				
-				
-			});
-		btnSubmit_1.setBounds(300, 227, 185, 43);
-		searchPanel.add(btnSubmit_1);
-		
+		JTable table_1 = new JTable();
+		table_1.setBounds(54, 309, 719, 177);
+		searchPanel.add(table_1);
 		
 		JLabel lblResults = new JLabel("Results");
 		lblResults.setBounds(65, 292, 61, 16);
 		searchPanel.add(lblResults);
 		
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(56, 310, 719, 177);
-		searchPanel.add(scrollPane_1);
+		JButton btnSubmit_1 = new JButton("Submit");
+		Image Img4 = new ImageIcon(this.getClass().getResource("/check.png")).getImage();
+		btnSubmit_1.setIcon(new ImageIcon(Img4));
+			btnSubmit_1.addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent e) {
+					String fNameText = textField_6.getText();
+					String lNameText = textField_8.getText();
+					String dobText 	 = textField_7.getText();
+					String patIDText = textField.getText();
+					
+					if (patIDText == null){
+						// code for name search
+						// code to display text in table_1
+					}else{
+						// code for ID search
+						// code to display text in table_1
+					}
+				}
+				
+	
+			});
+		btnSubmit_1.setBounds(300, 227, 185, 43);
+		searchPanel.add(btnSubmit_1);
+		
 		
 		JButton button = new JButton("Home");
 		Image Img6 = new ImageIcon(this.getClass().getResource("/Home.png")).getImage();
