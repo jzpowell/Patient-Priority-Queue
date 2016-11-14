@@ -1,0 +1,3 @@
+The installation is very easy, just put jcalendar.jar in your class path. 
+If you want to run the JCalendar demos (see below) or just use the great JGoodies Looks Look and Feel, put also jgoodies-looks-2.4.1.jar in your class path. 
+Both are in the lib directory of this JCalendar distribution.
