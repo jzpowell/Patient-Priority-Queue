@@ -1,5 +1,5 @@
 /******************************************************************
-* This is the Driver class. It houses all of the callabe methods our
+* This is the Driver class. It houses all of the callable methods our
 * Priority Queue and GUI will implement. If you come across a method
 * that needs to be added, let me know and I will make sure it gets
 * entered in. 
@@ -19,9 +19,9 @@ import java.util.*;
 
 
 	
-class Driver {
-	
-	public static int Pat_ID = 1000;
+public class methodClass {
+	public static int maxNum;
+	public static int Pat_ID;
 	public static String Pat_FName;
 	public static String Pat_LName;
 	public static String Pat_MName;
@@ -71,6 +71,34 @@ class Driver {
 		}
 	}
 	
+	
+	public static int updateIDNum(){
+		
+		try{  
+			Class.forName("com.mysql.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Patient_Queue?autoReconnect=true&useSSL=false","root","password");  
+	
+			Statement stmt=con.createStatement();  
+			String cmd = "Select max(Pat_ID) from Pat_List";
+			ResultSet rs = stmt.executeQuery(cmd);
+			
+			while(rs.next()){
+				maxNum = rs.getInt("max(Pat_ID)");
+			}
+			
+			//System.out.println(maxNum);
+			
+			Pat_ID = maxNum++;
+			
+			con.close();
+				
+			}catch(Exception e){ System.out.println(e);
+		}
+		return Pat_ID;
+	}
+	
+	
 	public static void addEntry(String Pat_FName, String Pat_LName ,String Pat_MName, String Pat_StreetAddrs, String Pat_City, String Pat_State, String Pat_Height, String Pat_Weight, String Pat_DOB){
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
@@ -82,11 +110,10 @@ class Driver {
 			
 			
 			
-			String add = "INSERT INTO Pat_List VALUES ('"+Pat_ID+"', '"+Pat_FName+"', '"+Pat_LName+"', '"+Pat_MName+"', '"+Pat_StreetAddrs+"', '"+Pat_City+"', '" + Pat_State+"', '"+Pat_Height+"', '"+Pat_Weight+"', '"+Pat_DOB+"');";
+			String add = "INSERT INTO Pat_List VALUES ('"+Pat_ID+"', '"+Pat_FName+"', '"+Pat_MName+"', '"+Pat_LName+"', '"+Pat_StreetAddrs+"', '"+Pat_City+"', '" + Pat_State+"', '"+Pat_Height+"', '"+Pat_Weight+"', '"+Pat_DOB+"');";
 			stmt.executeUpdate(add);
 			con.close();
 			
-			Pat_ID++;
 			
 			//for console testing
 			//System.out.println("Entry added.");
