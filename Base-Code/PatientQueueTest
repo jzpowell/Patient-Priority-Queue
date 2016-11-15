@@ -1,4 +1,8 @@
-
+/* 
+##########################################
+     need to add other patient stuff
+##########################################
+*/
 public class Patient implements Comparable<Patient> {
 	//Information about patient 
 	private int id;
