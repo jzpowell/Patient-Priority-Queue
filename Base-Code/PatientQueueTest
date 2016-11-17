@@ -1,8 +1,4 @@
-/* 
-##########################################
-     need to add other patient stuff
-##########################################
-*/
+
 public class Patient implements Comparable<Patient> {
 	//Information about patient 
 	private int id;
@@ -23,6 +19,7 @@ public class Patient implements Comparable<Patient> {
 		Phone = p;
 		Injury = inj;
 		Priority = prior;
+		//System.out.println(toString());
 	}
 	// ID
 	public int getID(){
@@ -72,12 +69,16 @@ public class Patient implements Comparable<Patient> {
 			return 1;
 		else
 			return -1;
-	}
+		//System.out.println();
+		}
+	
+	
+		
 	//Prints out information
-	//Why isn't this printing when program executes??
 	public String toString(){
-		return ("ID: " + getID() + "Name: " + getName() + "Address: " + getStreetName() + "City: " + getCity() + "Zip: " + getZip() + "Phone: " + getPhone()
-		+ "Injury: " + getInjury() + "Priority: " + getPriority());
+		return ("ID: " + getID() + " Name: " + getName() + " Address: " + getStreetName() + " City: " + getCity() + " Zip: " + getZip() + " Phone: " + getPhone()
+		+ " Injury: " + getInjury() /* + " Priority: " + getPriority() */ );
+		
 	}
 	
 	
