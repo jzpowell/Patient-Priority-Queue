@@ -1,0 +1,161 @@
+import java.util.Scanner;
+import java.util.Comparator;
+import java.util.PriorityQueue;
+
+public class PQ {
+	// Implementation of queue using array
+	public Patient[] queueArray;
+	public int size;
+	// Initialize first and last for queue
+	public int fElement, lElement, numPatients = 0;
+	// Initialize for patient input
+	public static String fname;
+	public static String mname;
+	public static String lname;
+	public static String birth;
+	public static String injury;
+	public static String response; // console response (Y:N)
+	public static String sAddress;
+	public static String city;
+	public static String zip;
+	public static String phone;
+
+	public static void main(String[] args) {
+		PQ pq = new PQ(10);// max capacity
+		int i = 10; // Number of rooms available
+
+		// Precondition: There must be at least one patient.
+		// Postcondition: Inputs patient's information
+		while (i > 0) {
+			// Begin with receptionist asking for patient info
+			Scanner sc = new Scanner(System.in);
+			//Call Comparator
+			PriorityQueue<Patient> pqueue= new PriorityQueue<Patient>(4,new Comparator<Patient>(){
+				public int compare(Patient arg0, Patient arg1) {
+					return (Integer.valueOf(arg0.getID()).compareTo(arg1.getID()));
+				}
+				
+			}); //Importing priority queue package
+			System.out.print("Enter patient's name: ");		
+			//PriorityQueue<Patient> pq = new PriorityQueue<Patient>(4, new Comparator<Patient>()){
+			fname = sc.nextLine();
+			System.out.print("Enter date of date of birth: ");
+			birth = sc.nextLine();
+			System.out.print("Enter injury: ");
+			injury = sc.nextLine();
+			System.out.print("Address: ");
+			sAddress = sc.nextLine();
+			System.out.print("Add another patient? Y or N:  ");
+			response = sc.next();
+			i--;
+			
+			while (response.equalsIgnoreCase("y")) {
+				sc = new Scanner(System.in);
+				System.out.println("Enter patient's name");
+				fname = sc.nextLine();
+				System.out.println("Enter date of date of birth");
+				birth = sc.nextLine();
+				System.out.println("Address: ");
+				sAddress = sc.nextLine();
+				System.out.println("Enter injury");
+				injury = sc.nextLine();
+				System.out.println("Add another patient? Y or N");
+				response = sc.next();
+			}
+
+			Patient p1 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p2 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p3 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p4 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p5 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p6 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p7 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p8 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p9 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+			Patient p10 = new Patient(0, fname, mname, lname, birth, city, zip, phone, injury);
+
+			// Inserts up to 10 slots into the queue
+			pq.priorityInsert(p1);
+			pq.priorityInsert(p2);
+			pq.priorityInsert(p3);
+			pq.priorityInsert(p4);
+			pq.priorityInsert(p5);
+			pq.priorityInsert(p6);
+			pq.priorityInsert(p7);
+			pq.priorityInsert(p8);
+			pq.priorityInsert(p9);
+			pq.priorityInsert(p10);
+			// Decrementing because the lower the number the higher the priority
+			i++;
+
+			// print patient with top priority
+			System.out.println(pq.peek());
+			System.out.println(pq.element());
+			pq.remove(); // removing the top priority to list the next
+		}
+	}
+
+	// print the entire list of patients in the queue
+	public void printQueue() {
+
+	}
+
+	// priority queue
+	public PQ(int size) {
+		this.size = size;
+		queueArray = new Patient[size];
+	}
+
+	// Inserting patients into queue
+	public void insert(Patient input) {
+		if (numPatients + 1 <= size) {
+			queueArray[lElement++] = input;
+			numPatients++;
+		} else {
+			System.out.println("Queue is full");
+		}
+	}
+
+	// sorts queue from highest to lowest when being inserted
+	public void priorityInsert(Patient input) {
+		if (numPatients == 0) {
+			insert(input);
+		} else {
+			int i;
+			for (i = numPatients - 1; i >= 0; i--) {
+				if ((input.getPriority()) < (queueArray[i].getPriority())) {
+					queueArray[i + 1] = queueArray[i];
+				} else {
+					break;
+				}
+			}
+			queueArray[i + 1] = input;
+			lElement++;
+			numPatients++;
+		}
+	}
+
+	// Precondition: front must equal to null
+	// Postcondition: remove patients from the queue
+	public void remove() {
+		if (numPatients > 0) {
+			queueArray[fElement++] = null;
+			numPatients--;
+		} else {
+			System.out.println("Queue is empty");
+		}
+	}
+
+	// prints top priority
+	public Patient peek() {
+		return queueArray[fElement];
+	}
+
+	// Prints the patients order in the list
+	// Postcondition: return an int of the patient's element in the queue
+	public static int element() {
+		return PQ.element();
+
+	}
+}
+	
