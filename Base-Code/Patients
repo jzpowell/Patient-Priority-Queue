@@ -1,0 +1,150 @@
+/*Gathers information from Database
+ * Updates patient list
+ */
+public class Patient {
+	private String fName;
+	private String mName;
+	private String lName;
+	private String streetAddress;
+	private String city;
+	private String zipCode;
+	private String phoneNum;
+	private int ID;
+	private String injury;
+	private int priority;
+
+	// Listing out the severity of any 'keyword' injury
+	// To order the injury according to priority instead of
+	// inputting the priority number, it sorts it manually
+
+	//Constructor 
+	public Patient(int ID, String fName, String mName, String lName, String streetAddress, String city, String zip,
+			String phone, String injury) {
+		this.fName = fName;
+		this.mName = mName;
+		this.lName = lName;
+		this.streetAddress = streetAddress;
+		this.city = city;
+		this.zipCode = zip;
+		this.phoneNum = phone;
+		this.ID = ID;
+		this.injury = injury;
+		this.priority = Injuries(injury);
+	}
+
+	// Two-dimensional array to assign the order of priority and potential injuries.
+	private static String[][] Injuries = new String[][] { { "trauma", "stroke", "gunshot wound" },
+			{ "excessive bleeding", "burns", "chest pain" }, { "pregnancies", "abdominal pain", "cold flu" } };
+			
+	// scanning the list of priorities to determine the severity of the injury
+	private static int Injuries(String injury) {
+		for (int i = 1; i < injury.length(); i++) {
+			for (int j = 1; j < injury.length(); j++) {
+				if (Injuries[i][j].equals(Injuries)) { // matching keywords from
+					System.out.println("match.");
+				}
+			}
+		}
+		return 1;
+	}
+
+	public String getfName() {
+		return fName;
+	}
+
+	public void setfName(String fName) {
+		this.fName = fName;
+	}
+
+	public String getmName() {
+		return mName;
+	}
+
+	public void setmName(String mName) {
+		this.mName = mName;
+	}
+
+	public String getlName() {
+		return lName;
+	}
+
+	public void setlName(String lName) {
+		this.lName = lName;
+	}
+
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+
+	public String getStreetAddress() {
+		return streetAddress;
+	}
+
+	public void setStreetAddress(String streetAddress) {
+		this.streetAddress = streetAddress;
+	}
+
+	public String getCity() {
+		return city;
+	}
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+	public String getZipCode() {
+		return zipCode;
+	}
+
+	public void setZipCode(String zipCode) {
+		this.zipCode = zipCode;
+	}
+
+	public String getPhoneNum() {
+		return phoneNum;
+	}
+
+	public void setPhoneNum(String phoneNum) {
+		this.phoneNum = phoneNum;
+	}
+
+	public String getInjury() {
+		return injury;
+	}
+
+	public void setInjury(String injury) {
+		this.injury = injury;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	// Compares patients and prioritizes level of injuries
+	// this should queue them according to int Priority (Hardcoded for now)
+	// 1 being main priority, 2 being queued, then so on and so forth
+	public int compareTo(Patient other) {
+		if (this.equals(other))
+			return 0;
+		else if (getPriority() > other.getPriority())
+			return 1;
+		else
+			return -1;
+	}
+
+	// Prints out information
+	// Why isn't this printing when program executes??
+	public String toString() {
+		return ("ID: " + getID() + "Name: " + getfName() + " " + getlName() + "\nAddress: " + getStreetAddress()
+				+ "City: " + getCity() + "Zip: " + getZipCode() + "Phone: " + getPhoneNum() + "\nInjury: " + getInjury()
+				+ " Priority: " + getPriority());
+	}
+}
