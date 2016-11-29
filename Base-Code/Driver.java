@@ -22,6 +22,7 @@ import java.util.*;
 public class methodClass {
 	public static int maxNum;
 	public static int Pat_ID;
+	public static int idDisplay;
 	public static String Pat_FName;
 	public static String Pat_LName;
 	public static String Pat_MName;
@@ -31,9 +32,19 @@ public class methodClass {
 	public static String Pat_Height; 
 	public static String Pat_Weight;
 	public static String Pat_DOB;
+	public static String Pat_Proiority;
 	
 	
-	
+	public static Connection dbConnection(){
+		try{  
+			Class.forName("com.mysql.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Patient_Queue?autoReconnect=true&useSSL=false","root","password"); 
+			return con;
+	}catch(Exception e){ System.out.println(e);
+		return null;
+		}
+	}
 	
 	public static void addDatabase(String name){
 		try{  
@@ -80,16 +91,18 @@ public class methodClass {
 			"jdbc:mysql://localhost:3306/Patient_Queue?autoReconnect=true&useSSL=false","root","password");  
 	
 			Statement stmt=con.createStatement();  
-			String cmd = "Select max(Pat_ID) from Pat_List";
+			String cmd = "Select max(Patient_ID) from Pat_List";
 			ResultSet rs = stmt.executeQuery(cmd);
 			
 			while(rs.next()){
-				maxNum = rs.getInt("max(Pat_ID)");
+				maxNum = rs.getInt("max(Patient_ID)");
 			}
 			
 			//System.out.println(maxNum);
 			
-			Pat_ID = maxNum++;
+			Pat_ID = maxNum + 1;
+			
+			//System.out.println(maxNum);
 			
 			con.close();
 				
@@ -98,8 +111,35 @@ public class methodClass {
 		return Pat_ID;
 	}
 	
+	public static int getIDNum(){
+		try{  
+			Class.forName("com.mysql.jdbc.Driver");  
+			Connection con=DriverManager.getConnection(  
+			"jdbc:mysql://localhost:3306/Patient_Queue?autoReconnect=true&useSSL=false","root","password");  
 	
-	public static void addEntry(String Pat_FName, String Pat_LName ,String Pat_MName, String Pat_StreetAddrs, String Pat_City, String Pat_State, String Pat_Height, String Pat_Weight, String Pat_DOB){
+			Statement stmt=con.createStatement();  
+			String cmd = "Select max(Patient_ID) from Pat_List";
+			ResultSet rs = stmt.executeQuery(cmd);
+			
+			while(rs.next()){
+				maxNum = rs.getInt("max(Patient_ID)");
+			}
+			
+			//System.out.println(maxNum);
+			
+			idDisplay = maxNum + 1;
+			
+			//System.out.println(maxNum);
+			
+			con.close();
+				
+			}catch(Exception e){ System.out.println(e);
+		}
+		return idDisplay;
+	}
+	
+	
+	public static void addEntry(String Pat_FName, String Pat_MName, String Pat_LName , String Pat_StreetAddrs, String Pat_City, String Pat_State, String Pat_Height, String Pat_Weight, String Pat_DOB, String Pat_Priority){
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
@@ -110,35 +150,35 @@ public class methodClass {
 			
 			
 			
-			String add = "INSERT INTO Pat_List VALUES ('"+Pat_ID+"', '"+Pat_FName+"', '"+Pat_MName+"', '"+Pat_LName+"', '"+Pat_StreetAddrs+"', '"+Pat_City+"', '" + Pat_State+"', '"+Pat_Height+"', '"+Pat_Weight+"', '"+Pat_DOB+"');";
+			String add = "INSERT INTO Pat_List VALUES ('"+Pat_ID+"', '"+Pat_FName+"', '"+Pat_MName+"', '"+Pat_LName+"', '"+Pat_StreetAddrs+"', '"+Pat_City+"', '" + Pat_State+"', '"+Pat_Height+"', '"+Pat_Weight+"', '"+Pat_DOB+"', '"+Pat_Priority+"');";
 			stmt.executeUpdate(add);
 			con.close();
 			
 			
 			//for console testing
-			//System.out.println("Entry added.");
+			System.out.println("Entry added.");
 				
 			}catch(Exception e){ System.out.println(e);
 		}
 	}
 	
-	public static void pullAll(String dbName) {
+	public static void pullAll() {
 		try{  
 			Class.forName("com.mysql.jdbc.Driver");  
 			Connection con=DriverManager.getConnection(  
-			"jdbc:mysql://localhost:3306/Pat_List?autoReconnect=true&useSSL=false","root","password");  
+			"jdbc:mysql://localhost:3306/Patient_Queue?autoReconnect=true&useSSL=false","root","password");  
 			
 			
 			Statement stmt=con.createStatement();  
-			String add = "Select * From Patient";
+			String add = "Select * From Pat_List";
 			ResultSet rs = stmt.executeQuery(add);
 			
 			while(rs.next()){
 				int id = rs.getInt("Pat_ID");
-				String fName = rs.getString("Pat_Name");
+				String fName = rs.getString("Pat_FName");
 				String lName = rs.getString("Pat_LName");
-				String address = rs.getString("Address");
-				String city = rs.getString("City");
+				String address = rs.getString("Pat_StreetAddrs");
+				String city = rs.getString("Pat_City");
 				System.out.println(id + "\t\t" + fName + "\t\t" + lName + "\t\t" + address + "\t\t" + city + "\t\t");
 			}
 			
